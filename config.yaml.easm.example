@@ -1,0 +1,77 @@
+# Starbase EASM Configuration Example
+# This configuration demonstrates how to use the EASM integrations
+# for External Attack Surface Management data collection
+
+integrations:
+  # Bitsight Security Ratings Integration
+  - name: graph-bitsight
+    instanceId: bitsight-prod
+    directory: ./integrations/graph-bitsight
+    # For local development, use directory. For production:
+    # gitRemoteUrl: https://github.com/your-org/graph-bitsight.git
+    config:
+      BITSIGHT_API_KEY: your-bitsight-api-key
+      BITSIGHT_INCLUDE_SUBSIDIARIES: true
+      BITSIGHT_INCLUDE_FINDINGS_HISTORY: false
+
+  # CTM360 Attack Surface Management Integration
+  - name: graph-ctm360
+    instanceId: ctm360-prod
+    directory: ./integrations/graph-ctm360
+    config:
+      CTM360_API_KEY: your-ctm360-api-key
+      CTM360_TENANT_ID: your-tenant-id
+      CTM360_INCLUDE_THREATS: true
+      CTM360_INCLUDE_DATA_LEAKS: true
+      CTM360_INCLUDE_BRAND_ABUSE: true
+
+  # Tenable External Attack Surface Management Integration
+  - name: graph-tenable-easm
+    instanceId: tenable-easm-prod
+    directory: ./integrations/graph-tenable-easm
+    config:
+      TENABLE_EASM_ACCESS_KEY: your-access-key
+      TENABLE_EASM_SECRET_KEY: your-secret-key
+      TENABLE_EASM_REGION: us
+      TENABLE_EASM_INCLUDE_WEB_APPS: true
+
+  # Generic EASM Scanner Integration (for custom scanners)
+  - name: graph-easm-scanner
+    instanceId: custom-scanner-prod
+    directory: ./integrations/graph-easm-scanner
+    config:
+      EASM_SCANNER_NAME: internal-scanner
+      EASM_SCANNER_DATA_SOURCE_TYPE: file
+      EASM_SCANNER_DATA_FILE_PATH: ./scan-results.json
+
+  # Example: Multiple scanner instances
+  - name: graph-easm-scanner
+    instanceId: nmap-scanner
+    directory: ./integrations/graph-easm-scanner
+    config:
+      EASM_SCANNER_NAME: nmap
+      EASM_SCANNER_DATA_SOURCE_TYPE: file
+      EASM_SCANNER_DATA_FILE_PATH: ./nmap-results.json
+
+  - name: graph-easm-scanner
+    instanceId: nuclei-scanner
+    directory: ./integrations/graph-easm-scanner
+    config:
+      EASM_SCANNER_NAME: nuclei
+      EASM_SCANNER_DATA_SOURCE_TYPE: file
+      EASM_SCANNER_DATA_FILE_PATH: ./nuclei-results.json
+
+storage:
+  - engine: neo4j
+    config:
+      username: neo4j
+      password: devpass
+      uri: bolt://localhost:7687
+      database: neo4j
+
+# Alternative: Use JupiterOne cloud storage
+# storage:
+#   - engine: jupiterone
+#     config:
+#       apiKey: your-jupiterone-api-key
+#       accountId: your-jupiterone-account-id

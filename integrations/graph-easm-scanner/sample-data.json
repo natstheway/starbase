@@ -1,0 +1,180 @@
+{
+  "scan": {
+    "id": "scan-001",
+    "name": "External Attack Surface Scan - Q1 2024",
+    "scanner_name": "custom-easm-scanner",
+    "scanner_version": "1.0.0",
+    "scan_type": "full",
+    "started_at": "2024-01-15T08:00:00Z",
+    "completed_at": "2024-01-15T12:30:00Z",
+    "status": "completed",
+    "target_scope": ["example.com", "*.example.com"]
+  },
+  "domains": [
+    {
+      "id": "domain-001",
+      "domain": "example.com",
+      "registrar": "GoDaddy",
+      "registered_date": "2010-01-01",
+      "expiration_date": "2025-01-01",
+      "nameservers": ["ns1.example.com", "ns2.example.com"],
+      "whois_organization": "Example Corp",
+      "first_seen": "2024-01-15T08:00:00Z",
+      "last_seen": "2024-01-15T12:30:00Z"
+    }
+  ],
+  "subdomains": [
+    {
+      "id": "subdomain-001",
+      "subdomain": "api.example.com",
+      "parent_domain": "example.com",
+      "ip_addresses": ["192.0.2.10"],
+      "status": "active",
+      "first_seen": "2024-01-15T08:05:00Z",
+      "last_seen": "2024-01-15T12:30:00Z"
+    },
+    {
+      "id": "subdomain-002",
+      "subdomain": "dev.example.com",
+      "parent_domain": "example.com",
+      "ip_addresses": ["192.0.2.20"],
+      "status": "active",
+      "first_seen": "2024-01-15T08:06:00Z",
+      "last_seen": "2024-01-15T12:30:00Z"
+    }
+  ],
+  "ip_addresses": [
+    {
+      "id": "ip-001",
+      "ip_address": "192.0.2.10",
+      "version": 4,
+      "hostname": "api.example.com",
+      "asn": "AS12345",
+      "asn_name": "Example ISP",
+      "country": "US",
+      "city": "San Francisco",
+      "cloud_provider": "AWS",
+      "is_public": true,
+      "first_seen": "2024-01-15T08:05:00Z",
+      "last_seen": "2024-01-15T12:30:00Z"
+    },
+    {
+      "id": "ip-002",
+      "ip_address": "192.0.2.20",
+      "version": 4,
+      "hostname": "dev.example.com",
+      "asn": "AS12345",
+      "asn_name": "Example ISP",
+      "country": "US",
+      "city": "San Francisco",
+      "cloud_provider": "AWS",
+      "is_public": true,
+      "first_seen": "2024-01-15T08:06:00Z",
+      "last_seen": "2024-01-15T12:30:00Z"
+    }
+  ],
+  "ports": [
+    {
+      "id": "port-001",
+      "ip_address": "192.0.2.10",
+      "port": 443,
+      "protocol": "tcp",
+      "state": "open",
+      "service_name": "https",
+      "service_product": "nginx",
+      "service_version": "1.21.0",
+      "first_seen": "2024-01-15T08:10:00Z",
+      "last_seen": "2024-01-15T12:30:00Z"
+    },
+    {
+      "id": "port-002",
+      "ip_address": "192.0.2.10",
+      "port": 22,
+      "protocol": "tcp",
+      "state": "open",
+      "service_name": "ssh",
+      "service_product": "OpenSSH",
+      "service_version": "8.2p1",
+      "first_seen": "2024-01-15T08:10:00Z",
+      "last_seen": "2024-01-15T12:30:00Z"
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "id": "vuln-001",
+      "name": "Outdated SSH Version",
+      "description": "The SSH server is running an outdated version that may contain known vulnerabilities.",
+      "severity": "medium",
+      "cvss_score": 5.3,
+      "cve_ids": ["CVE-2021-28041"],
+      "affected_assets": ["192.0.2.10"],
+      "remediation": "Update OpenSSH to the latest stable version.",
+      "references": ["https://nvd.nist.gov/vuln/detail/CVE-2021-28041"],
+      "discovered_at": "2024-01-15T08:15:00Z",
+      "state": "open"
+    },
+    {
+      "id": "vuln-002",
+      "name": "Missing Security Headers",
+      "description": "The web server is missing important security headers like Content-Security-Policy.",
+      "severity": "low",
+      "cvss_score": 3.1,
+      "affected_assets": ["192.0.2.10", "192.0.2.20"],
+      "remediation": "Add appropriate security headers to all HTTP responses.",
+      "discovered_at": "2024-01-15T08:20:00Z",
+      "state": "open"
+    }
+  ],
+  "findings": [
+    {
+      "id": "finding-001",
+      "title": "Development Environment Exposed",
+      "description": "A development environment is publicly accessible on dev.example.com",
+      "category": "exposure",
+      "severity": "high",
+      "affected_asset": "dev.example.com",
+      "evidence": "HTTP 200 response with development framework debug information",
+      "remediation": "Restrict access to development environments using IP whitelisting or VPN.",
+      "discovered_at": "2024-01-15T08:25:00Z",
+      "state": "open"
+    }
+  ],
+  "certificates": [
+    {
+      "id": "cert-001",
+      "serial_number": "04:00:00:00:00:01:15:4b:5a:c3:94",
+      "subject_cn": "api.example.com",
+      "subject_org": "Example Corp",
+      "issuer_cn": "DigiCert SHA2 Extended Validation Server CA",
+      "issuer_org": "DigiCert Inc",
+      "valid_from": "2023-06-01T00:00:00Z",
+      "valid_to": "2024-06-01T23:59:59Z",
+      "fingerprint_sha256": "a1b2c3d4e5f6...",
+      "key_algorithm": "RSA",
+      "key_size": 2048,
+      "is_self_signed": false,
+      "is_expired": false,
+      "is_wildcard": false,
+      "sans": ["api.example.com", "www.example.com"],
+      "associated_hosts": ["192.0.2.10"]
+    }
+  ],
+  "technologies": [
+    {
+      "id": "tech-001",
+      "name": "nginx",
+      "version": "1.21.0",
+      "category": "web-server",
+      "confidence": 95,
+      "detected_on": ["api.example.com", "dev.example.com"]
+    },
+    {
+      "id": "tech-002",
+      "name": "Node.js",
+      "version": "18.x",
+      "category": "runtime",
+      "confidence": 85,
+      "detected_on": ["api.example.com"]
+    }
+  ]
+}
